@@ -46,8 +46,11 @@
               }
             },
             animation: {
-              'fade-in-up': 'fadeInUp 0.8s ease-out',
+              'fade-in-up': 'fadeInUp 1s ease-out',
               'fade-in': 'fadeIn 0.6s ease-out',
+              'hero-title': 'heroTitle 1s cubic-bezier(0.23, 1, 0.32, 1)',
+              'hero-subtitle': 'heroSubtitle 1s cubic-bezier(0.23, 1, 0.32, 1) 0.2s both',
+              'hero-cta': 'heroCta 1s cubic-bezier(0.23, 1, 0.32, 1) 0.4s both',
             },
             keyframes: {
               fadeInUp: {
@@ -57,6 +60,18 @@
               fadeIn: {
                 '0%': { opacity: '0' },
                 '100%': { opacity: '1' },
+              },
+              heroTitle: {
+                '0%': { opacity: '0', transform: 'translateY(40px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              heroSubtitle: {
+                '0%': { opacity: '0', transform: 'translateY(40px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              heroCta: {
+                '0%': { opacity: '0', transform: 'translateY(40px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
               },
             }
           }
@@ -69,35 +84,119 @@
         font-family: 'Inter', sans-serif;
       }
       
+      /* Hero animations */
       .hero-title {
-        animation: fadeInUp 0.8s ease-out;
+        opacity: 0;
+        animation: heroTitle 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
       }
       
       .hero-subtitle {
-        animation: fadeInUp 0.8s ease-out 0.2s both;
+        opacity: 0;
+        animation: heroSubtitle 1s cubic-bezier(0.23, 1, 0.32, 1) 0.2s both;
       }
       
       .hero-cta {
-        animation: fadeInUp 0.8s ease-out 0.4s both;
+        opacity: 0;
+        animation: heroCta 1s cubic-bezier(0.23, 1, 0.32, 1) 0.4s both;
       }
       
+      /* Background image smooth loading */
+      .hero-bg {
+        transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), 
+                    transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      
+      .hero-bg.loaded {
+        opacity: 0.4 !important;
+        transform: scale(1) !important;
+      }
+      
+      .hero-overlay {
+        transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.3s;
+      }
+      
+      .hero-overlay.loaded {
+        opacity: 1 !important;
+      }
+      
+      /* Proper keyframes definition */
+      @keyframes heroTitle {
+        0% {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes heroSubtitle {
+        0% {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes heroCta {
+        0% {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      /* Section animations */
       .section-animate {
         opacity: 0;
-        animation: fadeInUp 0.8s ease-out forwards;
+        transform: translateY(30px);
+        transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+                    transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
       }
       
+      .section-animate.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* Service card animations */
       .service-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), 
+                    box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                    opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      
+      .service-card.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
       
       .service-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
       }
       
+      .service-card .service-icon {
+        transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      
+      .service-card:hover .service-icon {
+        transform: scale(1.1) rotate(3deg);
+      }
+      
+      /* Enhanced contact link */
       .contact-link {
         position: relative;
-        transition: color 0.2s ease;
+        transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       }
       
       .contact-link::after {
@@ -108,16 +207,103 @@
         bottom: -2px;
         left: 0;
         background: currentColor;
-        transition: width 0.25s ease;
+        transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
       }
       
       .contact-link:hover::after {
         width: 100%;
       }
       
-      /* Floating header animation */
-      .floating-header {
-        animation: fadeIn 0.8s ease-out 0.5s both;
+             /* Floating header with backdrop blur */
+       .floating-header {
+         -webkit-backdrop-filter: blur(10px);
+         backdrop-filter: blur(10px);
+         transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+         animation: slideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.5s both;
+       }
+      
+      .floating-header.scrolled {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Button animations */
+      .btn-primary {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      
+      .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s ease;
+      }
+      
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+      
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      }
+      
+      /* Mobile menu animations */
+      .mobile-menu {
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        pointer-events: none;
+      }
+      
+      .mobile-menu.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      
+      /* Form animations */
+      .form-field {
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      
+      .form-field:focus {
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Loading animation keyframes */
+      @keyframes slideDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      /* Reduced motion preferences */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
       }
     </style>
   </head>
@@ -141,7 +327,7 @@
       </div>
       
       <!-- Mobile menu -->
-      <div id="mobile-menu" class="md:hidden hidden mt-4 bg-white/95 backdrop-blur-sm border border-mono-200 rounded-lg mx-6">
+      <div id="mobile-menu" class="mobile-menu md:hidden hidden mt-4 bg-white/95 backdrop-blur-sm border border-mono-200 rounded-lg mx-6">
         <div class="px-4 py-3 space-y-2">
           <a href="#palvelut" class="block text-mono-600 hover:text-mono-900 text-sm py-1">Palvelut</a>
           <a href="#yhteystiedot" class="block text-mono-600 hover:text-mono-900 text-sm py-1">Yhteystiedot</a>
@@ -155,8 +341,9 @@
       <div class="absolute inset-0 z-0">
         <img src="hero-bg.jpg" 
              alt="" 
-             class="w-full h-full object-cover opacity-40 grayscale" />
-        <div class="absolute inset-0 bg-white/70"></div>
+             class="hero-bg w-full h-full object-cover grayscale" 
+             style="opacity: 0; transform: scale(1.05);" />
+        <div class="hero-overlay absolute inset-0 bg-white/70" style="opacity: 0;"></div>
       </div>
       
       <!-- Content -->
@@ -170,7 +357,7 @@
             Luotettava kirjanpitokumppani<br>Tampereen seudulla
           </p>
           <div class="hero-cta">
-            <a href="#yhteystiedot" class="inline-block bg-mono-900 text-white px-8 py-3 rounded-lg font-medium hover:bg-mono-800 transition-colors">
+            <a href="#yhteystiedot" class="btn-primary inline-block bg-mono-900 text-white px-8 py-3 rounded-lg font-medium hover:bg-mono-800">
               Ota yhteyttä
             </a>
           </div>
@@ -189,35 +376,35 @@
         <div class="grid md:grid-cols-3 gap-8">
           <!-- Service 1 -->
           <div class="service-card bg-white p-8 rounded-lg border border-mono-200 text-center">
-            <div class="w-16 h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div class="service-icon w-16 h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
               </svg>
             </div>
-                         <h3 class="text-xl font-semibold text-mono-900 mb-4">Kirjanpito</h3>
-             <p class="text-mono-600 leading-relaxed">Kuukausittainen kirjanpito, tilinpäätökset ja viranomaisilmoitukset. Huolehdin yrityksesi kirjanpidon täsmällisyydestä ja lakisääteisistä velvoitteista.</p>
+            <h3 class="text-xl font-semibold text-mono-900 mb-4">Kirjanpito</h3>
+            <p class="text-mono-600 leading-relaxed">Kuukausittainen kirjanpito, tilinpäätökset ja viranomaisilmoitukset. Huolehdin yrityksesi kirjanpidon täsmällisyydestä ja lakisääteisistä velvoitteista.</p>
           </div>
           
           <!-- Service 2 -->
           <div class="service-card bg-white p-8 rounded-lg border border-mono-200 text-center">
-            <div class="w-16 h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div class="service-icon w-16 h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
               </svg>
             </div>
-                         <h3 class="text-xl font-semibold text-mono-900 mb-4">Verosuunnittelu</h3>
-             <p class="text-mono-600 leading-relaxed">Veroilmoitukset, ALV-ilmoitukset ja ennakonpidätykset. Autan optimoimaan yrityksen verotuksen ja varmistan määräaikojen noudattamisen.</p>
+            <h3 class="text-xl font-semibold text-mono-900 mb-4">Verosuunnittelu</h3>
+            <p class="text-mono-600 leading-relaxed">Veroilmoitukset, ALV-ilmoitukset ja ennakonpidätykset. Autan optimoimaan yrityksen verotuksen ja varmistan määräaikojen noudattamisen.</p>
           </div>
           
           <!-- Service 3 -->
           <div class="service-card bg-white p-8 rounded-lg border border-mono-200 text-center">
-            <div class="w-16 h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div class="service-icon w-16 h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
               </svg>
             </div>
-                         <h3 class="text-xl font-semibold text-mono-900 mb-4">Taloushallinto</h3>
-             <p class="text-mono-600 leading-relaxed">Talousraportointi, budjetointi ja yrityksen talouden seuranta. Saat selkeän kuvan liiketoimintasi kannattavuudesta ja kehityksestä.</p>
+            <h3 class="text-xl font-semibold text-mono-900 mb-4">Taloushallinto</h3>
+            <p class="text-mono-600 leading-relaxed">Talousraportointi, budjetointi ja yrityksen talouden seuranta. Saat selkeän kuvan liiketoimintasi kannattavuudesta ja kehityksestä.</p>
           </div>
         </div>
       </div>
@@ -281,15 +468,15 @@
               
               <div>
                 <label for="email" class="block text-sm font-medium text-mono-700 mb-2">Sähköposti</label>
-                <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-mono-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mono-900 focus:border-transparent">
+                <input type="email" id="email" name="email" required class="form-field w-full px-4 py-3 border border-mono-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mono-900 focus:border-transparent">
               </div>
               
               <div>
                 <label for="message" class="block text-sm font-medium text-mono-700 mb-2">Viesti</label>
-                <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 border border-mono-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mono-900 focus:border-transparent" placeholder="Kerro tarkemmin tarpeistasi..."></textarea>
+                <textarea id="message" name="message" rows="4" required class="form-field w-full px-4 py-3 border border-mono-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mono-900 focus:border-transparent" placeholder="Kerro tarkemmin tarpeistasi..."></textarea>
               </div>
               
-              <button type="submit" class="w-full bg-mono-900 text-white py-3 px-4 rounded-lg hover:bg-mono-800 focus:outline-none focus:ring-2 focus:ring-mono-900 focus:ring-offset-2 transition-colors font-medium">
+              <button type="submit" class="btn-primary w-full bg-mono-900 text-white py-3 px-4 rounded-lg hover:bg-mono-800 focus:outline-none focus:ring-2 focus:ring-mono-900 focus:ring-offset-2 font-medium">
                 Lähetä viesti
               </button>
             </form>
@@ -316,10 +503,37 @@
     </footer>
 
     <script>
+      // Mobile menu toggle with smooth animations
       function toggleMobileMenu() {
         const menu = document.getElementById('mobile-menu');
-        menu.classList.toggle('hidden');
+        const isHidden = menu.classList.contains('hidden');
+        
+        if (isHidden) {
+          menu.classList.remove('hidden');
+          // Trigger animation after removing hidden
+          setTimeout(() => menu.classList.add('show'), 10);
+        } else {
+          menu.classList.remove('show');
+          // Hide after animation completes
+          setTimeout(() => menu.classList.add('hidden'), 300);
+        }
       }
+      
+      // Header scroll effect
+      let lastScrollY = 0;
+      const header = document.querySelector('.floating-header');
+      
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        
+        if (scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+        
+        lastScrollY = scrollY;
+      });
       
       // Smooth scrolling for anchor links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -333,33 +547,74 @@
             });
             // Close mobile menu if open
             const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenu) {
-              mobileMenu.classList.add('hidden');
+            if (mobileMenu && mobileMenu.classList.contains('show')) {
+              mobileMenu.classList.remove('show');
+              setTimeout(() => mobileMenu.classList.add('hidden'), 300);
             }
           }
         });
       });
 
-      // Animate sections on scroll
+      // Enhanced scroll animations with staggered effects
       const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
       };
 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('visible');
           }
         });
       }, observerOptions);
 
+      // Observe section animations
       document.querySelectorAll('.section-animate').forEach(el => {
         observer.observe(el);
       });
 
-      // Handle form submission
+      // Staggered service card animations
+      const serviceCards = document.querySelectorAll('.service-card');
+      const serviceObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, index * 150); // 150ms delay between each card
+          }
+        });
+      }, observerOptions);
+
+      serviceCards.forEach(card => {
+        serviceObserver.observe(card);
+      });
+
+      // Preload background image for smooth loading
+      const heroImg = document.querySelector('.hero-bg');
+      const heroOverlay = document.querySelector('.hero-overlay');
+      
+      if (heroImg) {
+        const loadImage = () => {
+          setTimeout(() => {
+            heroImg.classList.add('loaded');
+            if (heroOverlay) {
+              heroOverlay.classList.add('loaded');
+            }
+          }, 500); // Small delay to ensure smooth animation
+        };
+
+        if (heroImg.complete && heroImg.naturalHeight !== 0) {
+          // Image already loaded
+          loadImage();
+        } else {
+          // Wait for image to load
+          heroImg.addEventListener('load', loadImage);
+          heroImg.addEventListener('error', loadImage); // Fallback in case of error
+        }
+      }
+
+      // Enhanced form submission with better UX
       document.getElementById('contact-form').addEventListener('submit', function(e) {
         const button = this.querySelector('button[type="submit"]');
         const originalText = button.innerHTML;
@@ -380,9 +635,35 @@
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
           e.preventDefault();
           setTimeout(() => {
-            document.getElementById('contact-form').classList.add('hidden');
-            document.getElementById('form-success').classList.remove('hidden');
+            document.getElementById('contact-form').style.opacity = '0';
+            document.getElementById('contact-form').style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+              document.getElementById('contact-form').classList.add('hidden');
+              document.getElementById('form-success').classList.remove('hidden');
+              document.getElementById('form-success').style.opacity = '0';
+              document.getElementById('form-success').style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                document.getElementById('form-success').style.opacity = '1';
+                document.getElementById('form-success').style.transform = 'translateY(0)';
+              }, 50);
+            }, 300);
           }, 1500);
+        }
+      });
+
+      // Add entrance animations to elements when page loads
+      window.addEventListener('load', () => {
+        // Trigger background image animation if not already loaded
+        const heroImg = document.querySelector('.hero-bg');
+        const heroOverlay = document.querySelector('.hero-overlay');
+        
+        if (heroImg && !heroImg.classList.contains('loaded')) {
+          setTimeout(() => {
+            heroImg.classList.add('loaded');
+            if (heroOverlay) {
+              heroOverlay.classList.add('loaded');
+            }
+          }, 200);
         }
       });
     </script>
