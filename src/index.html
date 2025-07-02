@@ -268,15 +268,7 @@
         pointer-events: auto;
       }
       
-      /* Form animations */
-      .form-field {
-        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      }
-      
-      .form-field:focus {
-        transform: scale(1.02);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      }
+
       
       /* Loading animation keyframes */
       @keyframes slideDown {
@@ -305,21 +297,55 @@
           transition-duration: 0.01ms !important;
         }
       }
+      
+      /* Mobile optimizations */
+      @media (max-width: 767px) {
+        /* Improve touch targets */
+        .mobile-menu a {
+          min-height: 44px;
+          display: flex;
+          align-items: center;
+        }
+        
+        /* Better mobile hero layout */
+        .hero-title {
+          line-height: 1.1;
+        }
+        
+        /* Remove hover effects on mobile */
+        .service-card:hover {
+          transform: none;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover {
+          transform: none;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Ensure proper spacing on small screens */
+        body {
+          -webkit-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+        }
+        
+
+      }
     </style>
   </head>
     <body class="bg-white font-inter antialiased text-mono-900">
     
     <!-- Floating Header -->
-    <header class="floating-header absolute top-0 w-full z-10 py-6">
-      <div class="max-w-6xl mx-auto px-6">
+    <header class="floating-header absolute top-0 w-full z-10 py-4 sm:py-6">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="flex justify-between items-center">
-          <div class="text-lg font-medium text-mono-900">Kirjanpito Mari</div>
+          <div class="text-base sm:text-lg font-medium text-mono-900">Kirjanpito Mari</div>
           <nav class="hidden md:flex space-x-8">
             <a href="#palvelut" class="text-mono-600 hover:text-mono-900 transition-colors text-sm">Palvelut</a>
             <a href="#yhteystiedot" class="text-mono-600 hover:text-mono-900 transition-colors text-sm">Yhteystiedot</a>
           </nav>
-          <button id="mobile-menu-button" class="md:hidden" onclick="toggleMobileMenu()" aria-label="Avaa navigaatiovalikko">
-            <svg class="w-5 h-5 text-mono-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button id="mobile-menu-button" class="md:hidden p-2 -mr-2" onclick="toggleMobileMenu()" aria-label="Avaa navigaatiovalikko">
+            <svg class="w-6 h-6 text-mono-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
@@ -327,18 +353,18 @@
       </div>
       
       <!-- Mobile menu -->
-      <div id="mobile-menu" class="mobile-menu md:hidden hidden mt-4 bg-white/95 backdrop-blur-sm border border-mono-200 rounded-lg mx-6">
+      <div id="mobile-menu" class="mobile-menu md:hidden hidden mt-4 bg-white/95 backdrop-blur-sm border border-mono-200 rounded-lg mx-4 sm:mx-6">
         <div class="px-4 py-3 space-y-2">
-          <a href="#palvelut" class="block text-mono-600 hover:text-mono-900 text-sm py-1">Palvelut</a>
-          <a href="#yhteystiedot" class="block text-mono-600 hover:text-mono-900 text-sm py-1">Yhteystiedot</a>
+          <a href="#palvelut" class="block text-mono-600 hover:text-mono-900 text-base py-2 px-2 -mx-2 rounded-md transition-colors">Palvelut</a>
+          <a href="#yhteystiedot" class="block text-mono-600 hover:text-mono-900 text-base py-2 px-2 -mx-2 rounded-md transition-colors">Yhteystiedot</a>
         </div>
       </div>
     </header>
     
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center bg-white relative overflow-hidden">
-      <!-- Background Image -->
-      <div class="absolute inset-0 z-0">
+      <!-- Background Image - Hidden on mobile -->
+      <div class="absolute inset-0 z-0 hidden md:block">
         <img src="hero-bg.jpg" 
              alt="" 
              class="hero-bg w-full h-full object-cover grayscale" 
@@ -347,17 +373,18 @@
       </div>
       
       <!-- Content -->
-      <div class="max-w-6xl mx-auto px-6 py-20 relative z-10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 relative z-10">
         <div class="text-center max-w-4xl mx-auto">
-          <h1 class="hero-title text-5xl md:text-7xl font-light text-mono-900 mb-6 leading-tight">
+          <h1 class="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-light text-mono-900 mb-4 sm:mb-6 leading-tight">
             Kirjanpito<br>
             <span class="font-semibold">Mari Oy</span>
           </h1>
-          <p class="hero-subtitle text-xl md:text-2xl text-mono-600 font-light mb-8 leading-relaxed">
-            Luotettava kirjanpitokumppani<br>Tampereen seudulla
+          <p class="hero-subtitle text-lg sm:text-xl md:text-2xl text-mono-600 font-light mb-6 sm:mb-8 leading-relaxed px-2">
+            Luotettava kirjanpitokumppani<br class="hidden sm:block">
+            <span class="sm:hidden"> </span>Tampereen seudulla
           </p>
           <div class="hero-cta">
-            <a href="#yhteystiedot" class="btn-primary inline-block bg-mono-900 text-white px-8 py-3 rounded-lg font-medium hover:bg-mono-800">
+            <a href="#yhteystiedot" class="btn-primary inline-block bg-mono-900 text-white px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-mono-800 text-sm sm:text-base">
               Ota yhteyttä
             </a>
           </div>
@@ -366,78 +393,84 @@
     </section>
 
     <!-- Services Section -->
-    <section id="palvelut" class="py-20 bg-mono-50">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center mb-16 section-animate">
-          <h2 class="text-3xl md:text-4xl font-light text-mono-900 mb-4">Palvelumme</h2>
-          <p class="text-lg text-mono-600">Räätälöimme palvelut yrityksesi tarpeisiin</p>
+    <section id="palvelut" class="py-12 sm:py-16 md:py-20 bg-mono-50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12 sm:mb-16 section-animate">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-light text-mono-900 mb-3 sm:mb-4">Palvelumme</h2>
+          <p class="text-base sm:text-lg text-mono-600 px-4">Räätälöimme palvelut yrityksesi tarpeisiin</p>
         </div>
         
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid gap-6 sm:gap-8 md:grid-cols-3">
           <!-- Service 1 -->
-          <div class="service-card bg-white p-8 rounded-lg border border-mono-200 text-center">
-            <div class="service-icon w-16 h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="service-card bg-white p-6 sm:p-8 rounded-lg border border-mono-200 text-center">
+            <div class="service-icon w-14 h-14 sm:w-16 sm:h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+              <svg class="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-mono-900 mb-4">Kirjanpito</h3>
-            <p class="text-mono-600 leading-relaxed">Kuukausittainen kirjanpito, tilinpäätökset ja viranomaisilmoitukset. Huolehdin yrityksesi kirjanpidon täsmällisyydestä ja lakisääteisistä velvoitteista.</p>
+            <h3 class="text-lg sm:text-xl font-semibold text-mono-900 mb-3 sm:mb-4">Kirjanpito</h3>
+            <p class="text-sm sm:text-base text-mono-600 leading-relaxed">Kuukausittainen kirjanpito, tilinpäätökset ja viranomaisilmoitukset. Huolehdin yrityksesi kirjanpidon täsmällisyydestä ja lakisääteisistä velvoitteista.</p>
           </div>
           
           <!-- Service 2 -->
-          <div class="service-card bg-white p-8 rounded-lg border border-mono-200 text-center">
-            <div class="service-icon w-16 h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="service-card bg-white p-6 sm:p-8 rounded-lg border border-mono-200 text-center">
+            <div class="service-icon w-14 h-14 sm:w-16 sm:h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+              <svg class="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-mono-900 mb-4">Verosuunnittelu</h3>
-            <p class="text-mono-600 leading-relaxed">Veroilmoitukset, ALV-ilmoitukset ja ennakonpidätykset. Autan optimoimaan yrityksen verotuksen ja varmistan määräaikojen noudattamisen.</p>
+            <h3 class="text-lg sm:text-xl font-semibold text-mono-900 mb-3 sm:mb-4">Verosuunnittelu</h3>
+            <p class="text-sm sm:text-base text-mono-600 leading-relaxed">Veroilmoitukset, ALV-ilmoitukset ja ennakonpidätykset. Autan optimoimaan yrityksen verotuksen ja varmistan määräaikojen noudattamisen.</p>
           </div>
           
           <!-- Service 3 -->
-          <div class="service-card bg-white p-8 rounded-lg border border-mono-200 text-center">
-            <div class="service-icon w-16 h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="service-card bg-white p-6 sm:p-8 rounded-lg border border-mono-200 text-center">
+            <div class="service-icon w-14 h-14 sm:w-16 sm:h-16 bg-mono-900 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+              <svg class="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
               </svg>
             </div>
-            <h3 class="text-xl font-semibold text-mono-900 mb-4">Taloushallinto</h3>
-            <p class="text-mono-600 leading-relaxed">Talousraportointi, budjetointi ja yrityksen talouden seuranta. Saat selkeän kuvan liiketoimintasi kannattavuudesta ja kehityksestä.</p>
+            <h3 class="text-lg sm:text-xl font-semibold text-mono-900 mb-3 sm:mb-4">Taloushallinto</h3>
+            <p class="text-sm sm:text-base text-mono-600 leading-relaxed">Talousraportointi, budjetointi ja yrityksen talouden seuranta. Saat selkeän kuvan liiketoimintasi kannattavuudesta ja kehityksestä.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="yhteystiedot" class="py-20 bg-white">
-      <div class="max-w-4xl mx-auto px-6">
-        <div class="text-center mb-16 section-animate">
-          <h2 class="text-3xl md:text-4xl font-light text-mono-900 mb-4">Yhteystiedot</h2>
-          <p class="text-lg text-mono-600 mb-8">Ota yhteyttä ja kerromme lisää</p>
+    <section id="yhteystiedot" class="py-12 sm:py-16 md:py-20 bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12 sm:mb-16 section-animate">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-light text-mono-900 mb-3 sm:mb-4">Yhteystiedot</h2>
+          <p class="text-base sm:text-lg text-mono-600 mb-6 sm:mb-8 px-4">Ota yhteyttä ja kerromme lisää</p>
         </div>
         
-        <div class="grid md:grid-cols-2 gap-12">
+        <div class="max-w-2xl mx-auto">
           <!-- Contact Info -->
-          <div class="space-y-8">
-            <div>
-              <h3 class="text-xl font-semibold text-mono-900 mb-6">Ota yhteyttä</h3>
-              <div class="space-y-4">
+          <div class="space-y-8 sm:space-y-12">
+            <div class="text-center">
+              <h3 class="text-lg sm:text-xl font-semibold text-mono-900 mb-8 sm:mb-12">Ota yhteyttä</h3>
+            </div>
+            
+            <div class="space-y-8 max-w-xl mx-auto">
+              <div class="flex items-center justify-center">
                 <div class="flex items-center">
-                  <svg class="w-5 h-5 text-mono-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 text-mono-600 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 7.89a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                   </svg>
-                  <a href="mailto:kirjanpitomari@kirjanpitomari.fi" class="text-mono-700 hover:text-mono-900 contact-link">
+                  <a href="mailto:kirjanpitomari@kirjanpitomari.fi" class="text-mono-700 hover:text-mono-900 contact-link text-sm sm:text-base break-all">
                     kirjanpitomari@kirjanpitomari.fi
                   </a>
                 </div>
+              </div>
+              
+              <div class="flex items-start justify-center">
                 <div class="flex items-start">
-                  <svg class="w-5 h-5 text-mono-600 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 text-mono-600 mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                   </svg>
-                  <div class="text-mono-700">
+                  <div class="text-mono-700 text-sm sm:text-base text-center">
                     <div>c/o Nokian tili- ja kiint.tsto Oy</div>
                     <div>Poutuntie 10</div>
                     <div>37100 NOKIA</div>
@@ -445,59 +478,16 @@
                 </div>
               </div>
             </div>
-            
-          </div>
-          
-          <!-- Contact Form -->
-          <div>
-            <div id="form-success" class="hidden text-center py-8">
-              <div class="w-16 h-16 bg-mono-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-mono-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-              <h3 class="text-xl font-semibold text-mono-900 mb-3">Kiitos yhteydenotosta!</h3>
-              <p class="text-mono-600">Vastaamme sinulle mahdollisimman pian.</p>
-            </div>
-
-            <form id="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="space-y-6" netlify>
-              <input type="hidden" name="form-name" value="contact" />
-              <div class="hidden">
-                <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-              </div>
-              
-              <div>
-                <label for="email" class="block text-sm font-medium text-mono-700 mb-2">Sähköposti</label>
-                <input type="email" id="email" name="email" required class="form-field w-full px-4 py-3 border border-mono-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mono-900 focus:border-transparent">
-              </div>
-              
-              <div>
-                <label for="message" class="block text-sm font-medium text-mono-700 mb-2">Viesti</label>
-                <textarea id="message" name="message" rows="4" required class="form-field w-full px-4 py-3 border border-mono-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mono-900 focus:border-transparent" placeholder="Kerro tarkemmin tarpeistasi..."></textarea>
-              </div>
-              
-              <button type="submit" class="btn-primary w-full bg-mono-900 text-white py-3 px-4 rounded-lg hover:bg-mono-800 focus:outline-none focus:ring-2 focus:ring-mono-900 focus:ring-offset-2 font-medium">
-                Lähetä viesti
-              </button>
-            </form>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-mono-900 text-white py-12">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center">
-          <h3 class="text-xl font-semibold mb-4">Kirjanpito Mari Oy</h3>
-          <p class="text-mono-300 mb-6">Luotettava kumppani yrityksesi kirjanpitoon</p>
-          <div class="space-y-2 text-mono-400">
-            <div>kirjanpitomari@kirjanpitomari.fi</div>
-            <div>c/o Nokian tili- ja kiint.tsto Oy, Poutuntie 10, 37100 NOKIA</div>
-          </div>
-        </div>
-        <div class="border-t border-mono-800 mt-8 pt-8 text-center text-mono-500">
-          <p>&copy; 2024 Kirjanpito Mari Oy. Kaikki oikeudet pidätetään.</p>
+    <footer class="bg-mono-900 text-white py-6">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center text-mono-400 text-sm">
+          <p>&copy; 2025 Kirjanpito Mari Oy. Kaikki oikeudet pidätetään.</p>
         </div>
       </div>
     </footer>
@@ -614,42 +604,7 @@
         }
       }
 
-      // Enhanced form submission with better UX
-      document.getElementById('contact-form').addEventListener('submit', function(e) {
-        const button = this.querySelector('button[type="submit"]');
-        const originalText = button.innerHTML;
-        
-        // Show loading state
-        button.innerHTML = `
-          <div class="flex items-center justify-center">
-            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Lähetetään...
-          </div>
-        `;
-        button.disabled = true;
-        
-        // For local development, show success message
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-          e.preventDefault();
-          setTimeout(() => {
-            document.getElementById('contact-form').style.opacity = '0';
-            document.getElementById('contact-form').style.transform = 'translateY(-20px)';
-            setTimeout(() => {
-              document.getElementById('contact-form').classList.add('hidden');
-              document.getElementById('form-success').classList.remove('hidden');
-              document.getElementById('form-success').style.opacity = '0';
-              document.getElementById('form-success').style.transform = 'translateY(20px)';
-              setTimeout(() => {
-                document.getElementById('form-success').style.opacity = '1';
-                document.getElementById('form-success').style.transform = 'translateY(0)';
-              }, 50);
-            }, 300);
-          }, 1500);
-        }
-      });
+
 
       // Add entrance animations to elements when page loads
       window.addEventListener('load', () => {
