@@ -5,12 +5,17 @@
   "license": "MIT",
   "scripts": {
     "dev": "npx http-server src -p 8080 -o",
-    "build": "rm -rf dist && mkdir -p dist/css && cp -r src/* dist/ && npx tailwindcss -i ./tailwind.css -o ./dist/css/style.css --content \"./src/**/*.html\" --content \"./dist/**/*.html\" --minify",
+    "build": "rm -rf dist && mkdir -p dist/css dist/images && npm run optimize-images && cp -r src/* dist/ && npx tailwindcss -i ./tailwind.css -o ./dist/css/style.css --content \"./src/**/*.html\" --content \"./dist/**/*.html\" --minify && npm run post-build",
+    "build:local": "npm run build && npx http-server dist -p 8081 -o",
+    "optimize-images": "node scripts/optimize-images.js",
+    "post-build": "node scripts/post-build.js",
     "clean": "rm -rf dist && mkdir -p dist/css"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "glob": "^10.3.10",
     "http-server": "^14.1.1",
+    "sharp": "^0.33.1",
     "tailwindcss": "^3.4.17"
   }
 }
